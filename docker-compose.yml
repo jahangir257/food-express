@@ -1,0 +1,15 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: always
+    volumes: [mongo_data:/data/db]
+  web:
+    build: .
+    restart: always
+    env_file: .env
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/foodie_express
+    ports: ["3000:3000"]
+    depends_on: [mongo]
+volumes:
+  mongo_data:
